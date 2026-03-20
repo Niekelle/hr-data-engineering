@@ -27,7 +27,7 @@ def average(data: list) -> float:
         
         total += hr
 
-    average =  total / len(data)
+    average = round( total / len(data), 2)
 
     return average
 
@@ -47,7 +47,7 @@ def median(data: list) -> float:
         r_index = len(sorted_data) // 2
         l_index = (len(sorted_data) // 2) - 1
         med = (sorted_data[r_index] + sorted_data[l_index]) / 2
-        return med
+        return round(med, 2)
 
 
 def range(data: list) -> float:
@@ -84,7 +84,9 @@ def rolling_avg(data: list, k: int) -> list:
         window = data[ i : i + k]
 
         window_avg = average(window)
-        new_data.append(window_avg)
+        rounded_avg = round(window_avg, 2)
+
+        new_data.append(rounded_avg)
     return new_data
 
 def run(file: str):
@@ -111,17 +113,30 @@ def run(file: str):
     cleaned_list, removed_values = clean_heartrate_data(data)
 
     # calculate the average, median, and range of this file using the functions you've wrote
-    avg = average(data)
+    hr_avg = average(cleaned_list)
 
-    med = median(data)
+    hr_med = median(cleaned_list)
 
-    range = range(data)
+    hr_range = range(cleaned_list)
+
+    hr_roll_avg = rolling_avg(cleaned_list, k = 6)
+
+    print("\n" + "="*40)
+    print(f"Heart Rate Report: {file}")
+    print("="*40)
 
     # print out your data quality measure to the console
-    ...
+    # print (f"File: {file}")
+    
+    print(f"Data Quality: Removed {len(removed_values)} invalid entries.")
 
     # print out your descriptive statistics to the console
-    ...
+    print(f"Average Heartrate: {hr_avg:}")
+    print(f"Median Heartrate:  {hr_med}")
+    print(f"Heartrate Range:  {hr_range}")
+    print(f"Rolling Averages: {hr_roll_avg[:5]}")
+
+    return hr_avg, hr_med, hr_range
 
 
 if __name__ == "__main__":
