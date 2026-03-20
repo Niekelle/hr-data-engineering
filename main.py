@@ -6,10 +6,12 @@ def clean_heartrate_data(data: list) -> tuple:
     removed_values = []
 
     for hr in data:
-        if hr.isdigit() and 30 <= int(hr) <= 250:
-            cleaned_list.append(int(hr))
+        stripped_hr = hr.strip()
+
+        if stripped_hr.isdigit() and 30 <= int(stripped_hr) <= 250:
+            cleaned_list.append(int(stripped_hr))
         else:
-            removed_values.append(hr)
+            removed_values.append(stripped_hr)
 
     return cleaned_list, removed_values
 
@@ -59,11 +61,21 @@ def range(data: list) -> float:
     return data_range
 
 
-def rolling_avg(data: list, k: int) -> float:
+def rolling_avg(data: list, k: int) -> list:
     """
-    CHALLENGE FUNCTION (Optional)
+    Calculate rolling average for heart rates over a specified window of time.
     """
-    pass
+    if not data:
+        return 0.0
+    
+    new_data = []
+
+    for i in range(len(data)):
+        window = data[ i : i + k]
+
+    window_avg = average(window)
+
+    new_data.appened(window_avg)
 
 
 def run(file: str):
@@ -82,7 +94,7 @@ def run(file: str):
     # open file using file I/O and read it into the `data` list
     with open(file, "r") as f:
         for line in f:
-            data.append(line.strip())
+            data.append(line)
 
 
     # Use `clean_heartrate_data` to clean the data and remove invalid entries
