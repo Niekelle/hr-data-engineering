@@ -56,7 +56,16 @@ def range(data: list) -> float:
     if not data:
         return 0.0
 
-    data_range = max(data) - min(data)
+    max_val = data[0]
+    min_val = data[0]
+    
+    for hr in data:
+        if hr >= max_val:
+            max_val = hr
+        if hr <= min_val:
+            min_val = hr
+        
+    data_range = max_val - min_val
 
     return data_range
 
