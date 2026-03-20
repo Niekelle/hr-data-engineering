@@ -75,17 +75,17 @@ def rolling_avg(data: list, k: int) -> list:
     Calculate rolling average for heart rates over a specified window of time.
     """
     if not data:
-        return 0.0
+        return []
     
     new_data = []
 
-    for i in range(len(data)):
+    # for i in range(len(data)):
+    for i, hr in enumerate(data): # changed from 'in range' to "i, hr in enumerate" to avoid shadowing conflict
         window = data[ i : i + k]
 
-    window_avg = average(window)
-
-    new_data.appened(window_avg)
-
+        window_avg = average(window)
+        new_data.append(window_avg)
+    return new_data
 
 def run(file: str):
     """
@@ -111,7 +111,11 @@ def run(file: str):
     cleaned_list, removed_values = clean_heartrate_data(data)
 
     # calculate the average, median, and range of this file using the functions you've wrote
-    
+    avg = average(data)
+
+    med = median(data)
+
+    range = range(data)
 
     # print out your data quality measure to the console
     ...
