@@ -1,93 +1,6 @@
-def clean_heartrate_data(data: list) -> tuple:
-    """
-    Clean raw heart-rate data by removing malformed or impossible values.
-    """
-    cleaned_list = []
-    removed_values = []
+import cleaner
+import stats
 
-    for hr in data:
-        stripped_hr = hr.strip()
-
-        if stripped_hr.isdigit() and 40 <= int(stripped_hr) <= 190:
-            cleaned_list.append(int(stripped_hr))
-        else:
-            removed_values.append(stripped_hr)
-
-    return cleaned_list, removed_values
-
-def average(data: list) -> float:
-    """
-    Calculate average of a list of integers using a for-loop. Assumes data is clean.
-    """
-    if not data:
-        return 0.0
-
-    total = 0
-    for hr in data:
-        
-        total += hr
-
-    average = round( total / len(data), 2)
-
-    return average
-
-def median(data: list) -> float:
-    """
-    """
-    if not data:
-        return 0.0
-    
-    sorted_data = sorted(data)
-    
-    if len(sorted_data) % 2 != 0:
-        mid_index = len(sorted_data) // 2
-        med = sorted_data[mid_index]
-        return med
-    else:
-        r_index = len(sorted_data) // 2
-        l_index = (len(sorted_data) // 2) - 1
-        med = (sorted_data[r_index] + sorted_data[l_index]) / 2
-        return round(med, 2)
-
-
-def range(data: list) -> float:
-    """
-    """
-    if not data:
-        return 0.0
-
-    max_val = data[0]
-    min_val = data[0]
-    
-    for hr in data:
-        if hr >= max_val:
-            max_val = hr
-        if hr <= min_val:
-            min_val = hr
-        
-    data_range = max_val - min_val
-
-    return data_range
-
-
-def rolling_avg(data: list, k: int) -> list:
-    """
-    Calculate rolling average for heart rates over a specified window of time.
-    """
-    if not data:
-        return []
-    
-    new_data = []
-
-    # for i in range(len(data)):
-    for i, hr in enumerate(data): # changed from 'in range' to "i, hr in enumerate" to avoid shadowing conflict
-        window = data[ i : i + k]
-
-        window_avg = average(window)
-        rounded_avg = round(window_avg, 2)
-
-        new_data.append(rounded_avg)
-    return new_data
 
 def run(file: str):
     """
@@ -110,16 +23,16 @@ def run(file: str):
 
     # Use `clean_heartrate_data` to clean the data and remove invalid entries
 
-    cleaned_list, removed_values = clean_heartrate_data(data)
+    cleaned_list, removed_values = cleaner.clean_heartrate_data(data)
 
     # calculate the average, median, and range of this file using the functions you've wrote
-    hr_avg = average(cleaned_list)
+    hr_avg = stats.average(cleaned_list)
 
-    hr_med = median(cleaned_list)
+    hr_med = stats.median(cleaned_list)
 
-    hr_range = range(cleaned_list)
+    hr_range = stats.range(cleaned_list)
 
-    hr_roll_avg = rolling_avg(cleaned_list, k = 6)
+    hr_roll_avg = stats.rolling_avg(cleaned_list, k = 6)
 
     print("\n" + "="*40)
     print(f"Heart Rate Report: {file}")
@@ -136,7 +49,7 @@ def run(file: str):
     print(f"Heartrate Range:  {hr_range}")
     print(f"Rolling Averages: {hr_roll_avg[:5]}")
 
-    return hr_avg, hr_med, hr_range
+    
 
 
 if __name__ == "__main__":
