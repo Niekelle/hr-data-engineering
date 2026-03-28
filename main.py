@@ -34,6 +34,8 @@ def run(file: str):
 
     hr_roll_avg = stats.rolling_avg(cleaned_list, k = 6)
 
+    hr_variance = stats.variance(cleaned_list)
+
     print("\n" + "="*40)
     print(f"Heart Rate Report: {file}")
     print("="*40)
@@ -48,6 +50,7 @@ def run(file: str):
     print(f"Median Heartrate:  {hr_med}")
     print(f"Heartrate Range:  {hr_range}")
     print(f"Rolling Averages: {hr_roll_avg[:5]}")
+    print(f"Heartrate variance: {hr_variance}")
 
     
 

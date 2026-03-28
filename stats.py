@@ -72,34 +72,13 @@ def rolling_avg(data: list, k: int) -> list:
         new_data.append(rounded_avg)
     return new_data
 
-def run(file: str):
+def variance(data: list) -> float:
     """
-    Process heart rate data from the a file by cleaning and
-    calculating summary statistics. Print out final values.
-
-    Args:
-        filename (str): The path to the data file (e.g., 'data/phase0.txt').
-
-    Returns:
-        float, float, float: You will return the average, median, and range.
     """
-    data = []
+    xbar = sum(data) / len(data)
+    
+    var = sum((x-xbar)**2 for x in data) / (len(data) - 1)
 
-    # open file using file I/O and read it into the `data` list
-    with open(file, "r") as f:
-        for line in f:
-            data.append(line)
+    return round(var, 2)
+    
 
-
-    # Use `clean_heartrate_data` to clean the data and remove invalid entries
-
-    cleaned_list, removed_values = clean_heartrate_data(data)
-
-    # calculate the average, median, and range of this file using the functions you've wrote
-    hr_avg = average(cleaned_list)
-
-    hr_med = median(cleaned_list)
-
-    hr_range = range(cleaned_list)
-
-    hr_roll_avg = rolling_avg(cleaned_list, k = 6)
