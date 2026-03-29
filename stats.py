@@ -1,6 +1,7 @@
 def average(data: list) -> float:
     """
     Calculate average of a list of integers using a for-loop. Assumes data is clean.
+    
     """
     if not data:
         return 0.0
@@ -55,7 +56,8 @@ def range(data: list) -> float:
 
 def rolling_avg(data: list, k: int) -> list:
     """
-    Calculate rolling average for heart rates over a specified window of time.
+    calculate rolling average for heart rates over a specified window of time.
+
     """
     if not data:
         return []

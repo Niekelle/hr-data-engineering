@@ -1,5 +1,6 @@
 import cleaner
 import stats
+import plots
 
 
 def run(file: str):
@@ -15,17 +16,16 @@ def run(file: str):
     """
     data = []
 
-    # open file using file I/O and read it into the `data` list
+    # open file and read it into the data list
     with open(file, "r") as f:
         for line in f:
             data.append(line)
 
 
-    # Use `clean_heartrate_data` to clean the data and remove invalid entries
-
+    # clean the data and remove invalid entries
     cleaned_list, removed_values = cleaner.clean_heartrate_data(data)
 
-    # calculate the average, median, and range of this file using the functions you've wrote
+    # calculate the average, median, and range
     hr_avg = stats.average(cleaned_list)
 
     hr_med = stats.median(cleaned_list)
@@ -40,9 +40,7 @@ def run(file: str):
     print(f"Heart Rate Report: {file}")
     print("="*40)
 
-    # print out your data quality measure to the console
-    # print (f"File: {file}")
-    
+    # print data quality measure to the console
     print(f"Data Quality: Removed {len(removed_values)} invalid entries.")
 
     # print out your descriptive statistics to the console
@@ -52,7 +50,9 @@ def run(file: str):
     print(f"Rolling Averages: {hr_roll_avg[:5]}")
     print(f"Heartrate variance: {hr_variance}")
 
-    
+    # generate plots and save to folder
+    plots.plts(cleaned_list, file, hr_avg, hr_variance)
+
 
 
 if __name__ == "__main__":
