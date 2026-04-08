@@ -43,7 +43,7 @@ def run(file: str):
     # print data quality measure to the console
     print(f"Data Quality: Removed {len(removed_values)} invalid entries.")
 
-    # print out your descriptive statistics to the console
+    # print out descriptive statistics to the console
     print(f"Average Heartrate: {hr_avg:}")
     print(f"Median Heartrate:  {hr_med}")
     print(f"Heartrate Range:  {hr_range}")
